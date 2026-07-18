@@ -1,7 +1,13 @@
 import { renderListWithTemplate } from "./utils.mjs";
 function productCardTemplate(product) {
+  const isDiscounted = product.FinalPrice < product.SuggestedRetailPrice;
+  const discountFlag = isDiscounted
+    ? `<span class="discount-flag">Sale!</span>`
+    : "";
+
   return `<li class="product-card">
     <a href="product_pages/?product=${product.Id}">
+      ${discountFlag}
       <img src="${product.Image}" alt="${product.Name}">
       <h2 class="card__brand">${product.Brand.Name}</h2>
       <h3 class="card__name">${product.Name}</h3>
