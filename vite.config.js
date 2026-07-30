@@ -14,6 +14,7 @@ export default defineConfig({
         product1: resolve(
           __dirname,
           "src/product_pages/cedar-ridge-rimrock-2.html",
+          
         ),
         product2: resolve(__dirname, "src/product_pages/marmot-ajax-3.html"),
         product3: resolve(
@@ -24,6 +25,9 @@ export default defineConfig({
           __dirname,
           "src/product_pages/northface-talus-4.html",
         ),
+        productListing: resolve(__dirname, "src/product_listing/index.html"),
+
+        productPage: resolve(__dirname, "src/product_pages/index.html"),
       },
     },
   },
