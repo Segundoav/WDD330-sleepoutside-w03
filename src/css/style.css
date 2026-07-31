@@ -261,3 +261,27 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+
+
+/* Breadcrumb styles */
+.breadcrumb {
+  padding: 0.5em 1em;
+  font-size: var(--small-font);
+  color: var(--dark-grey);
+  border-bottom: 1px solid var(--light-grey);
+}
+
+.breadcrumb a {
+  color: var(--tertiary-color);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb span {
+  color: var(--dark-grey);
+  font-weight: bold;
+}
+/* End breadcrumb styles */
