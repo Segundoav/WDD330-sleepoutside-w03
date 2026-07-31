@@ -16,3 +16,14 @@ async function addToCartHandler(e) {
 document
   .getElementById("addToCart")
   .addEventListener("click", addToCartHandler);
+
+  // --- Breadcrumb ---
+function renderBreadcrumb(category) {
+  const header = document.querySelector("header");
+  const nav = document.createElement("nav");
+  nav.className = "breadcrumb";
+  nav.innerHTML = `<a href="../index.html">Home</a> &gt; <span>${category}</span>`;
+  header.insertAdjacentElement("afterend", nav);
+}
+
+renderBreadcrumb("Tents");
