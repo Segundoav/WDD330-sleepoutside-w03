@@ -2,6 +2,7 @@ import { resolve } from "path";
 import { defineConfig } from "vite";
 
 export default defineConfig({
+  base: "/WDD330-sleepoutside-w03/",
   root: "src/",
   build: {
     outDir: "../dist",

@@ -13,6 +13,20 @@ function renderCartContents() {
 
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
+
+  renderCartTotal(cartItems);
+}
+
+function renderCartTotal(cartItems) {
+  const total = cartItems.reduce((sum, item) => sum + item.FinalPrice, 0);
+  const totalElement = document.querySelector(".list-total");
+  if (totalElement) {
+    totalElement.innerText = `Total: $${total.toFixed(2)}`;
+  }
+  const footer = document.querySelector(".list-footer");
+  if (footer) {
+    footer.classList.remove("hide");
+  }
 }
 
 function cartItemTemplate(item) {
@@ -27,7 +41,7 @@ function cartItemTemplate(item) {
     <h2 class="card__name">${item.Name}</h2>
   </a>
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
-  <p class="cart-card__quantity">qty: 1</p>
+  <p class="cart-card__quantity">qty: ${item.Quantity || 1}</p>
   <p class="cart-card__price">$${item.FinalPrice}</p>
 </li>`;
 
