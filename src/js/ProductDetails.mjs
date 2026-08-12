@@ -13,6 +13,11 @@ export default class ProductDetails {
     this.product = await this.dataSource.findProductById(this.productId);
     // the product details are needed before rendering the HTML
     this.renderProductDetails();
+
+    // W07: save last viewed category and recently viewed products to localStorage
+    setLocalStorage("so-last-category", this.product.Category);
+    this.addToRecentlyViewed();
+
     // once the HTML is rendered, add a listener to the Add to Cart button
     // Notice the .bind(this). This callback will not work if the bind(this) is missing. Review the readings from this week on "this" to understand why.
     document
@@ -24,6 +29,18 @@ export default class ProductDetails {
     const cartItems = getLocalStorage("so-cart") || [];
     cartItems.push(this.product);
     setLocalStorage("so-cart", cartItems);
+
+    // W07: also track total item count in cart as its own stored property
+    setLocalStorage("so-cart-count", cartItems.length);
+  }
+
+  addToRecentlyViewed() {
+    // W07: keep a small history of recently viewed product IDs
+    let recent = getLocalStorage("so-recently-viewed") || [];
+    recent = recent.filter((id) => id !== this.product.Id);
+    recent.unshift(this.product.Id);
+    recent = recent.slice(0, 5); // keep only the last 5
+    setLocalStorage("so-recently-viewed", recent);
   }
 
   renderProductDetails() {
@@ -49,22 +66,3 @@ function productDetailsTemplate(product) {
 
   document.querySelector("#add-to-cart").dataset.id = product.Id;
 }
-
-// ************* Alternative Display Product Details Method *******************
-// function productDetailsTemplate(product) {
-//   return `<section class="product-detail"> <h3>${product.Brand.Name}</h3>
-//     <h2 class="divider">${product.NameWithoutBrand}</h2>
-//     <img
-//       class="divider"
-//       src="${product.Image}"
-//       alt="${product.NameWithoutBrand}"
-//    >
-//     <p class="product-card__price">$${product.FinalPrice}</p>
-//     <p class="product__color">${product.Colors[0].ColorName}</p>
-//     <p class="product__description">
-//     ${product.DescriptionHtmlSimple}
-//     </p>
-//     <div class="product-detail__add">
-//       <button id="addToCart" data-id="${product.Id}">Add to Cart</button>
-//     </div></section>`;
-// }

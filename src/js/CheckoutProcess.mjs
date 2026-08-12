@@ -1,4 +1,4 @@
-import { getLocalStorage, alertMessage } from "./utils.mjs"; // <-- CAMBIO: agregado alertMessage
+import { getLocalStorage, setLocalStorage, alertMessage } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 
 const services = new ExternalServices();
@@ -95,6 +95,12 @@ export default class CheckoutProcess {
     try {
       const response = await services.checkout(order);
       console.log(response);
+      
+      // W07: guarda un resumen del pedido antes de vaciar el carrito
+      setLocalStorage("so-last-order", order);
+
+      // Vaciar el carrito
+      localStorage.removeItem(this.key);
 
       // Vaciar el carrito
       localStorage.removeItem(this.key);

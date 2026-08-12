@@ -16,6 +16,17 @@ function renderCartContents() {
 
   renderCartTotal(cartItems);
   attachRemoveListeners();
+  attachHoverListeners();
+}
+function attachHoverListeners() {
+  document.querySelectorAll(".cart-card").forEach((card) => {
+    card.addEventListener("mouseenter", () => {
+      card.style.backgroundColor = "#f9f9f9";
+    });
+    card.addEventListener("mouseleave", () => {
+      card.style.backgroundColor = "";
+    });
+  });
 }
 
 function renderCartTotal(cartItems) {
