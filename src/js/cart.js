@@ -1,4 +1,4 @@
-import { getLocalStorage, loadHeaderFooter } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, loadHeaderFooter } from "./utils.mjs";
 
 loadHeaderFooter();
 
@@ -11,10 +11,11 @@ function renderCartContents() {
     return;
   }
 
-  const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+  const htmlItems = cartItems.map((item, index) => cartItemTemplate(item, index));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
 
   renderCartTotal(cartItems);
+  attachRemoveListeners();
 }
 
 function renderCartTotal(cartItems) {
@@ -29,7 +30,7 @@ function renderCartTotal(cartItems) {
   }
 }
 
-function cartItemTemplate(item) {
+function cartItemTemplate(item, index) {
   const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img
@@ -43,9 +44,26 @@ function cartItemTemplate(item) {
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
   <p class="cart-card__quantity">qty: ${item.Quantity || 1}</p>
   <p class="cart-card__price">$${item.FinalPrice}</p>
+  <button class="cart-card__remove" data-index="${index}">Remove</button>
 </li>`;
 
   return newItem;
+}
+
+function attachRemoveListeners() {
+  document.querySelectorAll(".cart-card__remove").forEach((button) => {
+    button.addEventListener("click", (e) => {
+      const index = e.target.dataset.index;
+      removeItemFromCart(index);
+    });
+  });
+}
+
+function removeItemFromCart(index) {
+  const cartItems = getLocalStorage("so-cart");
+  cartItems.splice(index, 1);
+  setLocalStorage("so-cart", cartItems);
+  renderCartContents();
 }
 
 renderCartContents();
